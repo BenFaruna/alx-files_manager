@@ -1,7 +1,7 @@
 /* eslint-disable import/no-named-as-default */
-import dbClient from '../utils/db';
 import Queue from 'bull/lib/queue';
 import sha1 from 'sha1';
+import dbClient from '../utils/db';
 
 const userQueue = new Queue('email sending');
 
@@ -36,4 +36,5 @@ export default class UsersController {
     const { user } = req;
 
     res.status(200).json({ email: user.email, id: user._id.toString() });
+  }
 }

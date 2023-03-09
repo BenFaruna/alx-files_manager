@@ -20,7 +20,7 @@ class DBClient {
   }
 
   async nbFiles() {
-    return this.mongoClient.db().collection('files').countDocuments()
+    return this.mongoClient.db().collection('files').countDocuments();
   }
 }
 

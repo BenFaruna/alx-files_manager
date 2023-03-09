@@ -30,4 +30,3 @@ export const errorResponse = (err, req, res, next) => {
     error: err ? err.message || err.toString() : defaultMsg,
   });
 };
-
