@@ -1,15 +1,12 @@
 import express from 'express';
-import Routes from './routes/index';
-import { errorResponse } from 'middlewares/error';
+import router from './routes/index';
 
-const PORT = process.env.PORT || 5000;
 const app = express();
+const port = process.env.PORT || 5000;
 
-app.use(Routes);
-app.use(errorResponse);
+app.use(express.json());
+app.use('/', router);
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}...`);
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
-
-export default app;

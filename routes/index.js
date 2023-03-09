@@ -4,29 +4,17 @@ import UsersController from '../controllers/UsersController';
 import AuthController from '../controllers/AuthController';
 import FilesController from '../controllers/FilesController';
 
-import { basicAuthenticate, xTokenAuthenticate } from '../middlewares/auth';
-import { APIError, errorResponse } from '../middlewares/error';
+const router = express.Router();
 
-const Routes = express.Router();
+router.get('/status', AppController.getStatus);
+router.get('/stats', AppController.getStats);
 
-Routes.get('/status', AppController.getStatus);
-Routes.get('/stats', AppController.getStats);
+router.post('/users', UsersController.postNew);
+router.get('/users/me', UsersController.getMe);
 
-Routes.post('/users', UsersController.postNew);
-Routes.get('/users/me', xTokenAuthenticate, UsersController.getMe);
+router.get('/connect', AuthController.getConnect);
+router.get('/disconnect', AuthController.getDisconnect);
 
-Routes.get('/connect', basicAuthenticate, AuthController.getConnect);
-Routes.get('/disconnect', xTokenAuthenticate, AuthController.getDisconnect);
+router.post('/files', FilesController.postUpload);
 
-Routes.post('/files', xTokenAuthenticate, FilesController.postUpload);
-Routes.get('/files/:id', xTokenAuthenticate, FilesController.getShow);
-Routes.get('/files', xTokenAuthenticate, FilesController.getIndex);
-Routes.put('/files/:id/publish', xTokenAuthenticate, FilesController.putPublish);
-Routes.put('/files/:id/unpublish', xTokenAuthenticate, FilesController.putUnpublish);
-Routes.get('/files/:id/data', FilesController.getFile);
-
-Routes.all('*', (req, res, next) => {
-  errorResponse(new APIError(404, `Cannot ${req.method} ${req.url}`), req, res, next);
-});
-
-export default Routes;
+export default router;
